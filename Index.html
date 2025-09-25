@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Adware - Simulasi Edukatif</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .step {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #ff6b6b;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .step-number {
+            background: #ff6b6b;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .step h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .step p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .fake-install {
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .fake-install:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .popup {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -5px;
+            right: 5px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            opacity: 0.3;
+        }
+
+        .fake-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ccc;
+            pointer-events: none;
+        }
+
+        .real-close {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .ad-popup {
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            border: 3px solid #ff6b6b;
+            animation: bounce 2s infinite;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning h4 {
+            margin-bottom: 10px;
+            color: #8b4513;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .protection-tips {
+            background: linear-gradient(145deg, #e8f5e8, #d4edda);
+            border-left: 5px solid #28a745;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+
+        .protection-tips h3 {
+            color: #155724;
+            margin-bottom: 15px;
+        }
+
+        .protection-tips ul {
+            color: #155724;
+            line-height: 1.8;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            border-top: 3px solid #3498db;
+        }
+
+        .footer p {
+            margin: 0;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Simulasi Cara Kerja Adware</h1>
+            <p>Demo Edukatif untuk Memahami dan Mencegah Adware</p>
+        </div>
+
+        <div class="content">
+            <div class="warning">
+                <h4>⚠️ PERINGATAN PENTING</h4>
+                <p>Ini adalah simulasi edukatif untuk memahami cara kerja adware. Jangan pernah mengunduh atau menginstal aplikasi dari sumber yang tidak terpercaya!</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>📱 Tahap Instalasi - Minta Izin/Install</h3>
+                <p>Adware biasanya menyamar sebagai aplikasi berguna, game gratis, atau ekstensi browser yang menarik. Mereka meminta izin instalasi dengan iming-iming fitur menarik.</p>
+                <p><strong>Contoh penyamaran:</strong></p>
+                <button class="fake-install" onclick="showInstallDemo()">🎮 Install Game Gratis Terbaru!</button>
+                <button class="fake-install" onclick="showInstallDemo()">⚡ Speed Booster - Gratis!</button>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>⚙️ Tahap Background Service</h3>
+                <p>Setelah terinstal, adware akan menjalankan service di background tanpa sepengetahuan pengguna. Ini memungkinkan mereka bekerja terus-menerus.</p>
+                <button class="demo-button" onclick="startBackgroundDemo()">Demo Background Service</button>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>📢 Tahap Munculkan Iklan</h3>
+                <p>Adware akan menampilkan iklan secara berkala, biasanya setiap 5 detik atau setiap kali membuka aplikasi. Iklan muncul sebagai pop-up, overlay, atau prompt.</p>
+                <button class="demo-button" onclick="showAdDemo()">Demo Iklan Pop-up</button>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>❌ Tahap Susah Ditutup</h3>
+                <p>Tombol close pada iklan adware sering disamarkan atau di-disable, sehingga pengguna kesulitan menutup iklan dan terpaksa mengklik konten iklan.</p>
+                <button class="demo-button" onclick="showFakeCloseDemo()">Demo Tombol Close Palsu</button>
+            </div>
+
+            <div class="protection-tips">
+                <h3>🛡️ Cara Melindungi Diri dari Adware:</h3>
+                <ul>
+                    <li>Hanya download aplikasi dari toko resmi (Google Play, App Store)</li>
+                    <li>Baca review dan rating sebelum menginstal</li>
+                    <li>Periksa permission yang diminta aplikasi</li>
+                    <li>Gunakan antivirus yang terpercaya</li>
+                    <li>Hindari mengklik iklan pop-up yang mencurigakan</li>
+                    <li>Selalu update sistem operasi dan browser</li>
+                    <li>Jangan mudah tergoda aplikasi "gratis" yang terlalu bagus</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© Powered by ArmansyahOfc</p>
+        </div>
+    </div>
+
+    <!-- Pop-up untuk simulasi -->
+    <div class="popup-overlay" id="installPopup">
+        <div class="popup">
+            <h3>📱 Simulasi Instalasi</h3>
+            <p>Aplikasi meminta izin untuk:</p>
+            <ul style="text-align: left; margin: 15px 0;">
+                <li>Akses ke semua file</li>
+                <li>Menampilkan overlay</li>
+                <li>Akses kamera dan mikrofon</li>
+                <li>Menjalankan saat startup</li>
+            </ul>
+            <p><strong>⚠️ PERHATIAN: Izin yang berlebihan ini adalah red flag!</strong></p>
+            <button class="real-close" onclick="closePopup()">Tutup Demo</button>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="backgroundPopup">
+        <div class="popup">
+            <h3>⚙️ Background Service Aktif</h3>
+            <div style="margin: 20px 0;">
+                <div style="animation: bounce 1s infinite;">🔄 Service berjalan...</div>
+                <p>Mengumpulkan data browsing...</p>
+                <p>Mempersiapkan iklan...</p>
+                <p>Monitoring aktivitas pengguna...</p>
+            </div>
+            <button class="real-close" onclick="closePopup()">Stop Demo</button>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="adPopup">
+        <div class="popup ad-popup">
+            <h3>🎉 SELAMAT! ANDA MENANG!</h3>
+            <p>Klik sekarang untuk klaim hadiah $1000!</p>
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkZENzAwIi8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjQwIiBmaWxsPSIjRkY2QjZCIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kPC90ZXh0Pgo8L3N2Zz4K" alt="Money">
+            <button class="real-close" onclick="closePopup()">Tutup Iklan</button>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="fakeClosePopup">
+        <div class="popup ad-popup">
+            <div class="fake-close">×</div>
+            <h3>📱 Download Aplikasi Ini!</h3>
+            <p>Tombol close di atas tidak berfungsi!</p>
+            <p>Ini memaksa pengguna mengklik konten iklan</p>
+            <button class="real-close" onclick="closePopup()">Tombol Close yang Benar</button>
+        </div>
+    </div>
+
+    <script>
+        function showInstallDemo() {
+            document.getElementById('installPopup').style.display = 'flex';
+        }
+
+        function startBackgroundDemo() {
+            document.getElementById('backgroundPopup').style.display = 'flex';
+        }
+
+        function showAdDemo() {
+            document.getElementById('adPopup').style.display = 'flex';
+        }
+
+        function showFakeCloseDemo() {
+            document.getElementById('fakeClosePopup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.querySelectorAll('.popup-overlay').forEach(popup => {
+                popup.style.display = 'none';
+            });
+        }
+
+        // Auto-show ads every 10 seconds for demo (longer interval for educational purpose)
+        let adInterval;
+        function startAdDemo() {
+            adInterval = setInterval(() => {
+                if (Math.random() > 0.7) { // 30% chance
+                    showAdDemo();
+                }
+            }, 10000);
+        }
+
+        // Start demo when page loads
+        setTimeout(() => {
+            startAdDemo();
+        }, 3000);
+
+        // Close popup when clicking outside
+        document.querySelectorAll('.popup-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closePopup();
+                }
+            });
+        });
+    </script>
+</body>
+  </html>
